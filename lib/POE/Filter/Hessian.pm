@@ -1,6 +1,6 @@
 package  POE::Filter::Hessian;
 
-use version; our $VERSION = qv('0.1.0');
+use version; our $VERSION = qv('0.1.1');
 use Moose;
 use Hessian::Translator;
 use Hessian::Exception;

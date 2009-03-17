@@ -1,6 +1,6 @@
 ---
 name: POE-Filter-Hessian
-version: 0.1.0
+version: 0.1.1
 author:
   - 'William Travis Holton <wtholton@googlemail.com>'
 abstract: |-
@@ -14,6 +14,7 @@ requires:
   Exception::Class: 0
   Hessian::Client: '>=0.1.6'
   Moose: 0
+  MooseX::Clone: 0
   Perl::Critic: 0
   Test::Class: 0
   Test::Deep: 0
@@ -24,7 +25,7 @@ requires:
 provides:
   POE::Filter::Hessian:
     file: lib/POE/Filter/Hessian.pm
-    version: 0.1.0
+    version: 0.1.1
 generated_by: Module::Build version 0.3
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
