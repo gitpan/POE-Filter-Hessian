@@ -1,6 +1,6 @@
 package  POE::Filter::Hessian;
 
-use version; our $VERSION = qv('0.1.1');
+use version; our $VERSION = qv('0.1.2');
 use Moose;
 use Hessian::Translator;
 use Hessian::Exception;
@@ -42,7 +42,7 @@ sub get_one {    #{{{
     my $translator      = $self->translator();
     my $internal_buffer = $self->internal_buffer();
     my $element         = shift @{$internal_buffer};
-    return unless $element;
+    return [] unless $element;
     $translator->append_input_buffer($element);
 
     my $result;
@@ -50,7 +50,7 @@ sub get_one {    #{{{
     if ( my $e = $@ ) {
         my $exception = ref $e;
         if ($exception) {
-            return if Exception::Class->caught('MessageIncomplete::X');
+            return [] if Exception::Class->caught('MessageIncomplete::X');
             $e->rethrow();
         }
     }

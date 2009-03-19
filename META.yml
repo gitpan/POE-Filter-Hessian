@@ -1,8 +1,8 @@
 ---
 name: POE-Filter-Hessian
-version: 0.1.1
+version: 0.1.2
 author:
-  - 'William Travis Holton <wtholton@googlemail.com>'
+  - 'William Travis Holton <cromulent2000-eisley@yahoo.de>'
 abstract: |-
   Translate datastructures to and from Hessian for
   transmission via a POE ReadWrite wheel.
@@ -25,7 +25,7 @@ requires:
 provides:
   POE::Filter::Hessian:
     file: lib/POE/Filter/Hessian.pm
-    version: 0.1.1
+    version: 0.1.2
 generated_by: Module::Build version 0.3
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
