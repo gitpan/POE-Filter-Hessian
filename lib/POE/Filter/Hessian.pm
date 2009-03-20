@@ -1,6 +1,6 @@
 package  POE::Filter::Hessian;
 
-use version; our $VERSION = qv('0.1.2');
+use version; our $VERSION = qv('0.1.3');
 use Moose;
 use Hessian::Translator;
 use Hessian::Exception;
@@ -63,6 +63,7 @@ sub get {    #{{{
     $self->get_one_start($array);
     my $result = [];
     while ( my $processed_chunk = $self->get_one() ) {
+        last unless @{$processed_chunk};
         push @{$result}, @{$processed_chunk};
     }
     return $result;
