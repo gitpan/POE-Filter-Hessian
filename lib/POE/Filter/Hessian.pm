@@ -1,9 +1,11 @@
 package  POE::Filter::Hessian;
 
-use version; our $VERSION = qv('0.1.3');
+use version; our $VERSION = qv('0.2.0');
 use Moose;
 use Hessian::Translator;
 use Hessian::Exception;
+use YAML;
+#use Smart::Comments;
 
 with 'MooseX::Clone';
 
@@ -17,7 +19,10 @@ has 'translator' => (    #{{{
         my $self    = shift;
         my $version = $self->version();
         my $translator =
-          Hessian::Translator->new( chunked => 1, version => $version );
+          Hessian::Translator->new( 
+              chunked => 1, 
+              version => $version 
+          );
         return $translator;
       }
 
@@ -44,8 +49,10 @@ sub get_one {    #{{{
     my $element         = shift @{$internal_buffer};
     return [] unless $element;
     $translator->append_input_buffer($element);
+    ### get_one
 
     my $result;
+    my $return_array = [];
     eval { $result = $translator->process_message(); };
     if ( my $e = $@ ) {
         my $exception = ref $e;
@@ -54,7 +61,8 @@ sub get_one {    #{{{
             $e->rethrow();
         }
     }
-    return [$result];
+    push @{$return_array}, $result;# if $result;
+    return $return_array;
 
 }    #}}}
 
@@ -63,6 +71,9 @@ sub get {    #{{{
     $self->get_one_start($array);
     my $result = [];
     while ( my $processed_chunk = $self->get_one() ) {
+        my $processed_ref = ref $processed_chunk;
+        ### Processed data: Dump($processed_chunk)
+        ### type: $processed_ref
         last unless @{$processed_chunk};
         push @{$result}, @{$processed_chunk};
     }
@@ -73,6 +84,7 @@ sub put {    #{{{
     my ( $self, $array ) = @_;
     my $translator = $self->translator();
     $translator->serializer();
+    ### serializing: Dump($array)
     my @data = map { $translator->serialize_message($_) } @{$array};
     return \@data;
 }    #}}}
